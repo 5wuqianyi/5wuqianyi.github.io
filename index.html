@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>初一16班47人活动管理系统</title>
+    <title>初一16班47人活动管理系统2.0</title>
     <style>
         * {
             margin: 0;
@@ -11,12 +11,20 @@
             box-sizing: border-box;
             font-family: "Microsoft YaHei", sans-serif;
         }
-        /* 首页样式 - 可滚动 */
+        
+        /* 全局样式 */
+        body {
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        
+        /* 首页样式 */
         .home-page {
             min-height: 100vh;
-            background: #ffffff;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             padding: 2rem 0;
         }
+        
         .home-container {
             width: 100%;
             max-width: 1200px;
@@ -24,72 +32,95 @@
             text-align: center;
             padding: 0 1rem;
         }
+        
         .home-title {
             color: #2c3e50;
             font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
             margin-bottom: 3rem;
         }
+        
         .home-btn-group {
             display: flex;
             gap: 2rem;
             justify-content: center;
             margin-bottom: 5rem;
+            flex-wrap: wrap;
         }
+        
         .home-btn {
             padding: 1.2rem 3rem;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1.2rem;
             font-weight: bold;
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            min-width: 200px;
         }
+        
         .sign-nav-btn {
-            background: #3498db;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
         }
+        
         .draw-nav-btn {
-            background: #2ecc71;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
         }
+        
         .home-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
-
+        
         /* 下滑图文展示区 */
         .home-gallery {
             width: 100%;
             max-width: 1000px;
-            margin: 0 auto;
+            margin: 4rem auto 0;
             padding: 2rem 1rem;
             display: flex;
             flex-direction: column;
-            gap: 3rem;
+            gap: 4rem;
         }
+        
         .gallery-item {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
             align-items: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         }
+        
         .gallery-img {
             width: 100%;
             max-width: 600px;
-            height: 400px;
+            height: 300px;
             object-fit: cover;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
+        
         .gallery-text {
             width: 100%;
             max-width: 600px;
             font-size: 1.1rem;
             color: #34495e;
-            line-height: 1.6;
+            line-height: 1.8;
+            text-align: left;
         }
-
-        /* 签到和抽奖面板通用样式 */
+        
+        /* 功能页面通用样式 */
         .function-page {
             display: none;
             min-height: 100vh;
@@ -97,148 +128,282 @@
             align-items: center;
             justify-content: center;
         }
+        
         .sign-page {
             background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
         }
+        
         .draw-page {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
+        
         .container {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             background: white;
             padding: 2.5rem;
-            border-radius: 12px;
+            border-radius: 16px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.2);
         }
+        
         h1 {
             color: #2c3e50;
             text-align: center;
             margin-bottom: 1.5rem;
+            font-size: 2.2rem;
         }
+        
         .back-btn {
             background: #95a5a6;
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
         }
+        
+        .back-btn:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+        
         .edit-area {
             margin-bottom: 1.5rem;
         }
+        
         label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: bold;
             color: #34495e;
+            font-size: 1.1rem;
         }
+        
         #nameList, #nameListDraw {
             width: 100%;
-            height: 120px;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            resize: none;
+            height: 150px;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            resize: vertical;
             font-size: 1rem;
+            transition: border 0.3s ease;
         }
+        
+        #nameList:focus, #nameListDraw:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
         .btn-group {
             display: flex;
             gap: 1rem;
             justify-content: center;
             margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
+        
         button {
             padding: 1rem 2rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: bold;
         }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-
+        
         /* 签到面板专属样式 */
         #loadBtn {
-            background: #3498db;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
         }
+        
         #resetSignBtn {
-            background: #e74c3c;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
             color: white;
         }
+        
         .sign-stat {
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             color: #e74c3c;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
             background: #fef5f5;
+            border: 2px solid #e74c3c;
         }
+        
         .sign-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 1rem;
             margin-top: 1rem;
-        }
-        .sign-item {
+            max-height: 500px;
+            overflow-y: auto;
             padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+        }
+        
+        .sign-item {
+            padding: 1.2rem 0.5rem;
             background: #f8f9fa;
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-weight: 500;
         }
+        
         .sign-item:hover {
-            background: #e3e6e9;
+            background: #e9ecef;
+            border-color: #3498db;
         }
+        
         .signed {
-            background: #d4edda;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
             color: #155724;
             font-weight: bold;
+            border-color: #155724;
         }
+        
         .signed:hover {
-            background: #c3e6cb;
+            background: linear-gradient(135deg, #c3e6cb 0%, #b1dfbb 100%);
         }
-
+        
         /* 抽奖面板专属样式 */
         #drawBtn {
-            background: #2ecc71;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
             color: white;
         }
+        
         #resetDrawBtn {
-            background: #e74c3c;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
             color: white;
         }
-        .result {
+        
+        .result-container {
             text-align: center;
             padding: 2rem;
             background: #f8f9fa;
-            border-radius: 8px;
-            margin-top: 1rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            border: 2px solid #e0e0e0;
         }
-        #resultText {
-            font-size: 2rem;
-            font-weight: bold;
+        
+        .result-container h3 {
             color: #2c3e50;
-            margin-top: 1rem;
-            height: 3rem; /* 固定高度防止抖动 */
-            line-height: 3rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
-        /* 抽奖滚动动画样式 */
+        
+        #resultText {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50; /* 保持原始颜色，不显示为红色 */
+            margin-top: 1rem;
+            height: 4rem;
+            line-height: 4rem;
+            transition: all 0.3s ease;
+        }
+        
+        /* 修改：抽中后的名字保持原来的颜色，不加红色 */
+        .drawn-name {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50; /* 原来的颜色 */
+            animation: bounce 0.5s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .prize-history {
+            margin-top: 2rem;
+            text-align: left;
+        }
+        
+        .prize-history h4 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        #drawnList {
+            list-style: none;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #eee;
+        }
+        
+        #drawnList li {
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            font-weight: 500;
+            color: #2c3e50; /* 已中奖名单也保持原始颜色 */
+        }
+        
+        /* 抽奖滚动动画样式 - 修改为原始颜色 */
         .rolling {
-            color: #e74c3c;
+            color: #2c3e50; /* 滚动时也使用原始颜色 */
             animation: flash 0.1s infinite;
         }
+        
         @keyframes flash {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
+            0% { opacity: 0.5; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .home-title {
+                font-size: 2rem;
+            }
+            
+            .home-btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .home-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .sign-list {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+            
+            #resultText {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -247,6 +412,7 @@
     <div class="home-page" id="homePage">
         <div class="home-container">
             <h1 class="home-title">初一16班47人活动管理系统</h1>
+            <p class="subtitle">便捷签到与趣味抽奖系统 2.0出版时间：2026.2.7</p>
             <div class="home-btn-group">
                 <button class="home-btn sign-nav-btn" onclick="showPage('signPage')">进入签到系统</button>
                 <button class="home-btn draw-nav-btn" onclick="showPage('drawPage')">进入抽奖系统</button>
@@ -255,14 +421,40 @@
 
         <!-- 下滑图文展示区 -->
         <div class="home-gallery">
-
-<!-- 照片1 + 文字1 -->
             <div class="gallery-item">
-                 
+                <h2 style="color: #2c3e50; width: 100%; text-align: center;">关于本系统</h2>
+                <div class="gallery-text">
+                    <p>本系统专为初一16班同学设计，提供便捷的签到和公平的抽奖功能。</p>
+                    <p><strong>主要功能：</strong></p>
+                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li><strong>签到系统：</strong>点击名单即可完成签到，实时显示签到状态</li>
+                        <li><strong>抽奖系统：</strong>3秒滚动动画效果，公平抽取幸运同学</li>
+                        <li><strong>数据同步：</strong>签到和抽奖名单自动同步，避免重复输入</li>
+                        <li><strong>已中奖记录：</strong>记录所有被抽中的同学，避免重复中奖</li>
+                    </ul>
+                </div>
             </div>
-
-
-
+            
+            <div class="gallery-item">
+                <h2 style="color: #2c3e50; width: 100%; text-align: center;">使用说明</h2>
+                <div class="gallery-text">
+                    <p><strong>签到系统使用：</strong></p>
+                    <ol style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>点击"加载名单"按钮加载同学名单</li>
+                        <li>点击列表中任一同学姓名即可标记为已签到</li>
+                        <li>再次点击可取消签到状态</li>
+                        <li>顶部实时显示签到统计信息</li>
+                    </ol>
+                    
+                    <p style="margin-top: 1rem;"><strong>抽奖系统使用：</strong></p>
+                    <ol style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>点击"开始抽签"按钮开始随机抽选</li>
+                        <li>3秒滚动动画后显示结果</li>
+                        <li>被抽中的同学会记录在下方列表中</li>
+                        <li>点击"重置抽奖"可重新开始</li>
+                    </ol>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -325,11 +517,12 @@
             </div>
             <div class="btn-group">
                 <button id="loadBtn">加载名单</button>
+                <button id="exportSignBtn">导出签到</button>
                 <button id="resetSignBtn">重置签到</button>
             </div>
             <div class="sign-container">
                 <h3>签到列表</h3>
-                <div class="sign-stat" id="signStat">未签到人数：47人</div>
+                <div class="sign-stat" id="signStat">未签到人数：47人 | 已签到人数：0人</div>
                 <div class="sign-list" id="signList"></div>
             </div>
         </div>
@@ -341,7 +534,7 @@
             <button class="back-btn" onclick="showPage('homePage')">返回首页</button>
             <h1>47人抽奖系统</h1>
             <div class="edit-area">
-                <label for="nameListDraw">编辑47位参与者姓名（每行1人）</label>
+                <label for="nameListDraw">参与抽奖名单（与签到系统同步，可编辑）</label>
                 <textarea id="nameListDraw">
 1蒋孟航
 2李思琦
@@ -393,12 +586,17 @@
                 </textarea>
             </div>
             <div class="btn-group">
-                <button id="drawBtn">开始抽签</button>
+                <button id="drawBtn">开始抽奖</button>
+                <button id="syncFromSignBtn">从签到同步</button>
                 <button id="resetDrawBtn">重置抽奖</button>
             </div>
-            <div class="result">
-                <p>抽奖结果</p >
-                <div id="resultText">暂无结果</div>
+            <div class="result-container">
+                <h3>抽奖结果</h3>
+                <div id="resultText">等待抽奖...</div>
+            </div>
+            <div class="prize-history">
+                <h4>已中奖名单：<span id="drawnCount">0</span>人</h4>
+                <ul id="drawnList"></ul>
             </div>
         </div>
     </div>
@@ -421,8 +619,58 @@
         const signListEl = document.getElementById('signList');
         const nameListEl = document.getElementById('nameList');
         const loadBtnEl = document.getElementById('loadBtn');
+        const exportSignBtnEl = document.getElementById('exportSignBtn');
         const resetSignBtnEl = document.getElementById('resetSignBtn');
         const signStatEl = document.getElementById('signStat');
+        const nameListDrawEl = document.getElementById('nameListDraw');
+        const syncFromSignBtnEl = document.getElementById('syncFromSignBtn');
+
+        // 从签到系统同步到抽奖系统
+        function syncToDraw() {
+            nameListDrawEl.value = nameListEl.value;
+            initDrawNames();
+        }
+
+        // 从抽奖系统同步到签到系统
+        function syncToSign() {
+            nameListEl.value = nameListDrawEl.value;
+            loadNames();
+        }
+
+        // 导出签到数据
+        function exportSignData() {
+            const signed = document.querySelectorAll('.sign-item.signed');
+            if (signed.length === 0) {
+                alert('没有已签到的学生');
+                return;
+            }
+            
+            let data = "已签到学生名单：\n";
+            data += "总人数: " + nameList.length + " 人\n";
+            data += "已签到: " + signed.length + " 人\n";
+            data += "未签到: " + (nameList.length - signed.length) + " 人\n\n";
+            data += "已签到学生：\n";
+            signed.forEach((item, index) => {
+                data += (index + 1) + ". " + item.textContent.replace('（已签到）', '') + "\n";
+            });
+            
+            data += "\n未签到学生：\n";
+            const unsigned = document.querySelectorAll('.sign-item:not(.signed)');
+            unsigned.forEach((item, index) => {
+                data += (index + 1) + ". " + item.textContent + "\n";
+            });
+            
+            // 创建下载
+            const blob = new Blob([data], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '签到数据_' + new Date().toISOString().slice(0, 10) + '.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
 
         function updateSignStat() {
             const signedCount = document.querySelectorAll('.sign-item.signed').length;
@@ -449,9 +697,13 @@
                 signListEl.appendChild(item);
             });
             updateSignStat();
+            
+            // 同步到抽奖系统
+            syncToDraw();
         }
 
         function resetSign() {
+            if (!confirm('确定要重置所有签到状态吗？')) return;
             document.querySelectorAll('.sign-item').forEach(item => {
                 item.classList.remove('signed');
                 const name = item.textContent.split('（')[0];
@@ -461,20 +713,20 @@
         }
 
         loadBtnEl.addEventListener('click', loadNames);
+        exportSignBtnEl.addEventListener('click', exportSignData);
         resetSignBtnEl.addEventListener('click', resetSign);
-        window.onload = () => {
-            loadNames();
-            initDrawNames();
-        };
+        syncFromSignBtnEl.addEventListener('click', syncToSign);
 
-        // 抽奖功能逻辑 - 新增3秒滚动动画
+        // 抽奖功能逻辑
         let originalNames = [];
         let remainingNames = [];
-        const nameListDrawEl = document.getElementById('nameListDraw');
+        let drawnNames = [];
         const resultTextEl = document.getElementById('resultText');
         const drawBtnEl = document.getElementById('drawBtn');
         const resetDrawBtnEl = document.getElementById('resetDrawBtn');
-        let rollingInterval = null; // 滚动定时器
+        const drawnListEl = document.getElementById('drawnList');
+        const drawnCountEl = document.getElementById('drawnCount');
+        let rollingInterval = null;
 
         function initDrawNames() {
             originalNames = nameListDrawEl.value.split('\n').map(name => name.trim()).filter(name => name.length > 0);
@@ -482,9 +734,10 @@
                 alert(`抽奖名单共${originalNames.length}人，请确保正好47人！`);
             }
             remainingNames = [...originalNames];
+            drawnNames = [];
+            updateDrawnList();
         }
 
-        // 随机获取一个名字用于滚动
         function getRandomName() {
             const randomIndex = Math.floor(Math.random() * originalNames.length);
             return originalNames[randomIndex];
@@ -497,40 +750,86 @@
             }
             // 禁用抽奖按钮防止重复点击
             drawBtnEl.disabled = true;
-            drawBtnEl.style.opacity = '0.6';
+            drawBtnEl.textContent = "抽奖中...";
             // 添加滚动样式
             resultTextEl.classList.add('rolling');
+            resultTextEl.textContent = "抽奖中...";
             // 启动名字滚动
+            let count = 0;
             rollingInterval = setInterval(() => {
                 resultTextEl.textContent = getRandomName();
+                count++;
+                if (count > 20) { // 3秒后自动停止
+                    clearInterval(rollingInterval);
+                    finishDraw();
+                }
             }, 100);
-            // 3秒后停止滚动，显示最终结果
-            setTimeout(() => {
-                clearInterval(rollingInterval);
-                resultTextEl.classList.remove('rolling');
+        }
+
+        function finishDraw() {
+            resultTextEl.classList.remove('rolling');
+            if (remainingNames.length > 0) {
                 const randomIndex = Math.floor(Math.random() * remainingNames.length);
                 const drawnName = remainingNames[randomIndex];
-                remainingNames.splice(randomIndex, 1);
                 resultTextEl.textContent = drawnName;
-                // 启用抽奖按钮
-                drawBtnEl.disabled = false;
-                drawBtnEl.style.opacity = '1';
-            }, 3000); // 3000毫秒 = 3秒
+                // 移除红色样式，只保留默认颜色
+                resultTextEl.style.color = "#2c3e50";
+                resultTextEl.style.transform = "scale(1.1)";
+                
+                // 添加中奖动画效果
+                resultTextEl.classList.add('drawn-name');
+                setTimeout(() => {
+                    resultTextEl.classList.remove('drawn-name');
+                }, 1000);
+                
+                // 记录中奖者
+                drawnNames.push(drawnName);
+                remainingNames.splice(randomIndex, 1);
+                updateDrawnList();
+                // 显示中奖提示
+                setTimeout(() => {
+                    alert(`恭喜 ${drawnName} 中奖！`);
+                }, 100);
+            }
+            // 启用抽奖按钮
+            drawBtnEl.disabled = false;
+            drawBtnEl.textContent = "开始抽奖";
+        }
+
+        function updateDrawnList() {
+            drawnListEl.innerHTML = '';
+            drawnNames.forEach(name => {
+                const li = document.createElement('li');
+                li.textContent = name;
+                drawnListEl.appendChild(li);
+            });
+            drawnCountEl.textContent = drawnNames.length;
         }
 
         function resetDraw() {
+            if (!confirm('确定要重置抽奖吗？这将清空已中奖记录。')) return;
             remainingNames = [...originalNames];
-            resultTextEl.textContent = '暂无结果';
-            // 清除定时器（防止重置时还在滚动）
+            drawnNames = [];
+            resultTextEl.textContent = '等待抽奖...';
+            resultTextEl.style.color = "#2c3e50";
+            resultTextEl.style.transform = "scale(1)";
+            // 清除定时器
             if(rollingInterval) clearInterval(rollingInterval);
             resultTextEl.classList.remove('rolling');
             drawBtnEl.disabled = false;
-            drawBtnEl.style.opacity = '1';
+            drawBtnEl.textContent = "开始抽奖";
+            updateDrawnList();
         }
 
         drawBtnEl.addEventListener('click', drawName);
         resetDrawBtnEl.addEventListener('click', resetDraw);
         nameListDrawEl.addEventListener('blur', initDrawNames);
+
+        // 初始化页面
+        window.onload = () => {
+            loadNames();
+            initDrawNames();
+        };
     </script>
 </body>
 </html>
