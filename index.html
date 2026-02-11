@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>初一16班47人活动管理系统3.0</title>
+    <title>初一16班47人活动管理系统4.0</title>
     <style>
+        /* 全局样式 */
         * {
             margin: 0;
             padding: 0;
@@ -157,6 +158,11 @@
             left: 100%;
         }
         
+        .home-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+        
         .sign-nav-btn {
             background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
         }
@@ -173,9 +179,8 @@
             background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
         }
         
-        .home-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        .password-nav-btn {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
         }
         
         /* 下滑图文展示区 */
@@ -264,6 +269,10 @@
         
         .vote-page {
             background: linear-gradient(135deg, rgba(71, 118, 230, 0.9) 0%, rgba(142, 84, 233, 0.9) 100%);
+        }
+        
+        .password-page {
+            background: linear-gradient(135deg, rgba(142, 68, 173, 0.9) 0%, rgba(155, 89, 182, 0.9) 100%);
         }
         
         .container {
@@ -686,6 +695,81 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
         
+        /* 密码保护系统样式 - 重点修改部分 */
+        .password-area {
+            margin-bottom: 30px;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        
+        .password-textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .password-display {
+            min-height: 150px;
+            padding: 15px;
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            background: #f9f9f9;
+            margin-bottom: 15px;
+        }
+        
+        .password-status {
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .password-error {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* 密码保护系统按钮样式 - 新增样式 */
+        .password-btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .password-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        /* 密码保护系统按钮组样式 - 重点修改：增加按钮间距 */
+        .password-btn-group {
+            display: flex;
+            gap: 25px; /* 增加按钮间距为25px */
+            margin-top: 15px;
+            justify-content: center;
+        }
+        
         /* 响应式设计 */
         @media (max-width: 768px) {
             .home-title {
@@ -733,6 +817,11 @@
             .groups-container {
                 grid-template-columns: 1fr;
             }
+            
+            .password-btn-group {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -748,13 +837,14 @@
     <!-- 首页 -->
     <div class="home-page" id="homePage">
         <div class="home-container">
-            <h1 class="home-title">初一16班47人活动管理系统3.0</h1>
-            <p class="subtitle">签到、抽奖、分组、投票一站式解决方案 3.0出版时间：2026.2.8 15:33</p>
+            <h1 class="home-title">初一16班47人活动管理系统4.0</h1>
+            <p class="subtitle">签到、抽奖、分组、投票一站式解决方案 4.0出版时间：2026.2.11 14:34</p>
             <div class="home-btn-group">
                 <button class="home-btn sign-nav-btn" onclick="showPage('signPage')">进入签到系统</button>
                 <button class="home-btn draw-nav-btn" onclick="showPage('drawPage')">进入抽奖系统</button>
                 <button class="home-btn groups-nav-btn" onclick="showPage('groupsPage')">分组管理系统</button>
                 <button class="home-btn vote-nav-btn" onclick="showPage('votePage')">班级投票系统</button>
+                <button class="home-btn password-nav-btn" onclick="showPage('passwordPage')">密码保护系统</button>
             </div>
         </div>
 
@@ -790,6 +880,13 @@
                         <li>匿名投票</li>
                         <li>实时结果显示</li>
                     </ul>
+                    
+                    <p style="margin-top: 1rem;"><strong>密码保护系统：</strong></p>
+                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>教师密码保护</li>
+                        <li>实时文字显示</li>
+                        <li>跨设备同步</li>
+                    </ul>
                 </div>
             </div>
             
@@ -810,6 +907,14 @@
                         <li>3秒滚动动画后显示结果</li>
                         <li>被抽中的同学会记录在下方列表中</li>
                         <li>点击"重置抽奖"可重新开始</li>
+                    </ol>
+                    
+                    <p style="margin-top: 1rem;"><strong>密码保护系统使用：</strong></p>
+                    <ol style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>教师输入密码登录</li>
+                        <li>在输入区域编辑要显示的文字</li>
+                        <li>保存后自动在所有设备上显示</li>
+                        <li>学生端只能查看不能编辑</li>
                     </ol>
                 </div>
             </div>
@@ -1001,6 +1106,42 @@
                 <h3>投票结果</h3>
                 <div id="resultsContainer"></div>
                 <button onclick="resetVote()" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; margin-top: 1rem;">重新投票</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 密码保护系统页面 -->
+    <div class="function-page password-page" id="passwordPage">
+        <div class="container">
+            <button class="back-btn" onclick="showPage('homePage')">返回首页</button>
+            <h1>密码保护文字显示系统</h1>
+            
+            <!-- 登录区域 -->
+            <div class="password-area" id="passwordLoginArea">
+                <h2>教师登录</h2>
+                <p>请输入教师密码访问输入区域：</p>
+                <input type="password" id="teacherPassword" class="password-input" placeholder="输入教师密码">
+                <button id="passwordLoginBtn" class="password-btn">登录</button>
+                <p class="password-status password-error" id="passwordLoginStatus"></p>
+                <p class="password-status password-error hidden" id="passwordLockoutMessage"></p>
+            </div>
+            
+            <!-- 输入区域 -->
+            <div class="password-area hidden" id="passwordInputArea">
+                <h2>教师输入区域</h2>
+                <textarea id="passwordInputText" class="password-textarea" placeholder="在这里输入要显示的文字..."></textarea>
+                <div class="password-btn-group">
+                    <button id="passwordSaveBtn" class="password-btn">保存并显示</button>
+                    <button id="passwordLogoutBtn" class="password-btn">退出登录</button>
+                </div>
+                <p class="password-status" id="passwordSaveStatus"></p>
+            </div>
+            
+            <!-- 显示区域 -->
+            <div class="password-area">
+                <h2>学生显示区域</h2>
+                <div id="passwordDisplayText" class="password-display">这里将显示教师输入的文字...</div>
+                <p class="password-status">文字会自动更新，无需刷新页面</p>
             </div>
         </div>
     </div>
@@ -1463,10 +1604,170 @@
             document.getElementById('voteOptionsDisplay').innerHTML = '';
         }
 
-        // 初始化时加载签到名单
+        // 密码保护系统逻辑
+        const TEACHER_PASSWORD = "teacher123";
+        const MAX_ATTEMPTS = 5;
+        const LOCKOUT_DURATION = 5 * 60 * 1000; // 5分钟锁定
+        
+        let loginData = JSON.parse(localStorage.getItem('passwordLoginData')) || {
+            isLoggedIn: false,
+            failedAttempts: 0,
+            lockoutUntil: 0
+        };
+        
+        function initPasswordSystem() {
+            checkPasswordLockoutStatus();
+            
+            if (loginData.isLoggedIn) {
+                document.getElementById('passwordLoginArea').classList.add('hidden');
+                document.getElementById('passwordInputArea').classList.remove('hidden');
+            }
+            loadPasswordText();
+        }
+        
+        function checkPasswordLockoutStatus() {
+            const now = Date.now();
+            if (loginData.lockoutUntil > now) {
+                const remainingTime = Math.ceil((loginData.lockoutUntil - now) / 1000 / 60);
+                document.getElementById('passwordLockoutMessage').textContent = 
+                    `密码错误次数过多，请 ${remainingTime} 分钟后再试`;
+                document.getElementById('passwordLockoutMessage').classList.remove('hidden');
+                document.getElementById('teacherPassword').disabled = true;
+                document.getElementById('passwordLoginBtn').disabled = true;
+                
+                setTimeout(checkPasswordLockoutStatus, 1000);
+            } else if (loginData.failedAttempts >= MAX_ATTEMPTS) {
+                loginData.failedAttempts = 0;
+                localStorage.setItem('passwordLoginData', JSON.stringify(loginData));
+            }
+        }
+        
+        function loadPasswordText() {
+            const savedText = localStorage.getItem('passwordDisplayText');
+            if (savedText) {
+                document.getElementById('passwordDisplayText').textContent = savedText;
+                if (loginData.isLoggedIn) {
+                    document.getElementById('passwordInputText').value = savedText;
+                }
+            }
+        }
+        
+        function passwordLogin() {
+            const password = document.getElementById('teacherPassword').value.trim();
+            const now = Date.now();
+            
+            if (loginData.lockoutUntil > now) {
+                checkPasswordLockoutStatus();
+                return;
+            }
+            
+            if (password === '') {
+                document.getElementById('passwordLoginStatus').textContent = '请输入密码！';
+                document.getElementById('passwordLoginStatus').classList.add('password-error');
+                return;
+            }
+            
+            if (password === TEACHER_PASSWORD) {
+                // 登录成功
+                loginData.isLoggedIn = true;
+                loginData.failedAttempts = 0;
+                localStorage.setItem('passwordLoginData', JSON.stringify(loginData));
+                
+                document.getElementById('passwordLoginArea').classList.add('hidden');
+                document.getElementById('passwordInputArea').classList.remove('hidden');
+                document.getElementById('passwordLoginStatus').textContent = '';
+                document.getElementById('passwordLoginStatus').classList.remove('password-error');
+                document.getElementById('passwordLockoutMessage').classList.add('hidden');
+                document.getElementById('teacherPassword').value = '';
+                document.getElementById('teacherPassword').disabled = false;
+                document.getElementById('passwordLoginBtn').disabled = false;
+                loadPasswordText();
+            } else {
+                // 密码错误
+                loginData.failedAttempts++;
+                localStorage.setItem('passwordLoginData', JSON.stringify(loginData));
+                
+                if (loginData.failedAttempts >= MAX_ATTEMPTS) {
+                    // 达到最大错误次数，锁定账户
+                    loginData.lockoutUntil = now + LOCKOUT_DURATION;
+                    localStorage.setItem('passwordLoginData', JSON.stringify(loginData));
+                    
+                    document.getElementById('passwordLockoutMessage').textContent = '密码错误次数过多，请 5 分钟后再试';
+                    document.getElementById('passwordLockoutMessage').classList.remove('hidden');
+                    document.getElementById('teacherPassword').disabled = true;
+                    document.getElementById('passwordLoginBtn').disabled = true;
+                    
+                    // 设置定时器自动解除锁定
+                    setTimeout(checkPasswordLockoutStatus, 1000);
+                }
+                
+                document.getElementById('passwordLoginStatus').textContent = `密码错误！剩余尝试次数: ${MAX_ATTEMPTS - loginData.failedAttempts}`;
+                document.getElementById('passwordLoginStatus').classList.add('password-error');
+            }
+        }
+        
+        function passwordLogout() {
+            loginData.isLoggedIn = false;
+            localStorage.setItem('passwordLoginData', JSON.stringify(loginData));
+            
+            document.getElementById('passwordLoginArea').classList.remove('hidden');
+            document.getElementById('passwordInputArea').classList.add('hidden');
+            document.getElementById('passwordLoginStatus').textContent = '您已成功退出登录';
+            document.getElementById('passwordLoginStatus').classList.remove('password-error');
+            setTimeout(() => {
+                document.getElementById('passwordLoginStatus').textContent = '';
+            }, 2000);
+        }
+        
+        function savePasswordText() {
+            const text = document.getElementById('passwordInputText').value.trim();
+            
+            if (text === '') {
+                document.getElementById('passwordSaveStatus').textContent = '请输入一些文字再保存！';
+                document.getElementById('passwordSaveStatus').classList.add('password-error');
+                return;
+            }
+            
+            localStorage.setItem('passwordDisplayText', text);
+            document.getElementById('passwordDisplayText').textContent = text;
+            
+            document.getElementById('passwordSaveStatus').textContent = '文字已保存！';
+            document.getElementById('passwordSaveStatus').classList.remove('password-error');
+            setTimeout(() => {
+                document.getElementById('passwordSaveStatus').textContent = '';
+            }, 2000);
+        }
+        
+        // 初始化密码保护系统
+        document.getElementById('passwordLoginBtn').addEventListener('click', passwordLogin);
+        document.getElementById('passwordLogoutBtn').addEventListener('click', passwordLogout);
+        document.getElementById('passwordSaveBtn').addEventListener('click', savePasswordText);
+        document.getElementById('teacherPassword').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                passwordLogin();
+            }
+        });
+        document.getElementById('passwordInputText').addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                savePasswordText();
+            }
+        });
+        
+        // 监听本地存储变化
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'passwordDisplayText') {
+                document.getElementById('passwordDisplayText').textContent = e.newValue;
+                if (loginData.isLoggedIn) {
+                    document.getElementById('passwordInputText').value = e.newValue;
+                }
+            }
+        });
+        
+        // 页面加载时初始化
         window.onload = () => {
             loadNames();
             initDrawNames();
+            initPasswordSystem();
         };
     </script>
 </body>
