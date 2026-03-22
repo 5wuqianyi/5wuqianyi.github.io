@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>初一16班47人活动管理系统4.0</title>
+    <title>初一16班47人活动管理系统4.1</title>
     <style>
         /* 全局样式 */
         * {
@@ -838,7 +838,7 @@
     <div class="home-page" id="homePage">
         <div class="home-container">
             <h1 class="home-title">初一16班47人活动管理系统4.0</h1>
-            <p class="subtitle">签到、抽奖、分组、投票一站式解决方案 4.0出版时间：2026.2.11 14:34</p>
+            <p class="subtitle">签到、抽奖、分组、投票一站式解决方案 4.1出版时间：2026.3.22 22:36</p>
             <div class="home-btn-group">
                 <button class="home-btn sign-nav-btn" onclick="showPage('signPage')">进入签到系统</button>
                 <button class="home-btn draw-nav-btn" onclick="showPage('drawPage')">进入抽奖系统</button>
@@ -1283,7 +1283,7 @@
             rollingInterval = setInterval(() => {
                 resultTextEl.textContent = getRandomName();
                 count++;
-                if (count > 20) { // 3秒后自动停止
+                if (count > 5) { // 1秒后自动停止
                     clearInterval(rollingInterval);
                     finishDraw();
                 }
