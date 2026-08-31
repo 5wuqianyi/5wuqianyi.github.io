@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>初二16班47人活动管理系统4.2.1</title>
+    <title>初二16班47人活动管理系统4.3.1</title>
     <style>
         /* 全局样式 */
         * {
@@ -18,10 +18,9 @@
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            padding-bottom: 80px; /* 给底部栏留出空间 */
+            padding-bottom: 80px;
         }
         
-        /* 背景装饰元素 */
         .background-decoration {
             position: fixed;
             top: 0;
@@ -82,7 +81,6 @@
             66% { transform: translate(-20px, 20px) rotate(240deg); }
         }
         
-        /* 首页样式 */
         .home-page {
             min-height: 100vh;
             background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(240,240,240,0.9) 100%);
@@ -172,7 +170,6 @@
             background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
         }
         
-        /* 下滑图文展示区 */
         .home-gallery {
             width: 100%;
             max-width: 1000px;
@@ -223,7 +220,55 @@
             border-left: 4px solid #3498db;
         }
         
-        /* 功能页面通用样式 */
+        /* 课程表表格专属样式 */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: center;
+            line-height: 1.35;
+            margin-top: 0.5rem;
+        }
+        
+        .schedule-table caption {
+            font-weight: bold;
+            padding: 6px 0 8px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+        
+        .schedule-table th {
+            background: #b6e7a7;
+            color: #000;
+            border: 1px solid #6fae5d;
+            padding: 6px 4px;
+            font-weight: bold;
+        }
+        
+        .schedule-table td {
+            border: 1px solid #6fae5d;
+            padding: 6px 4px;
+        }
+        
+        .schedule-table tr:nth-child(even) td {
+            background: #dff5d2;
+        }
+        
+        .schedule-table tr:nth-child(odd) td {
+            background: #f0fbe8;
+        }
+        
+        .schedule-table tr:hover td {
+            background: #c8f0b0;
+        }
+        
+        .schedule-footer-note {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+        }
+        
         .function-page {
             display: none;
             min-height: 100vh;
@@ -292,7 +337,6 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
         
-        /* 签到系统样式 */
         .edit-area {
             margin-bottom: 1.5rem;
         }
@@ -347,7 +391,6 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
         
-        /* 签到面板专属样式 */
         #loadBtn {
             background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
@@ -418,7 +461,6 @@
             background: linear-gradient(135deg, #c3e6cb 0%, #b1dfbb 100%);
         }
         
-        /* 抽奖面板专属样式 */
         #drawBtn {
             background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
             color: white;
@@ -529,7 +571,6 @@
             to { transform: scale(1.1); }
         }
 
-        /* 底部版权栏样式 */
         footer {
             position: fixed;
             bottom: 0;
@@ -559,7 +600,6 @@
             letter-spacing: 2px;
         }
 
-        /* 响应式设计 */
         @media (max-width: 768px) {
             .home-title {
                 font-size: 2rem;
@@ -600,6 +640,9 @@
             .footer-text {
                 font-size: 0.95rem;
             }
+            .schedule-table {
+                font-size: 11px;
+            }
         }
     </style>
 </head>
@@ -615,8 +658,8 @@
     <!-- 首页 -->
     <div class="home-page" id="homePage">
         <div class="home-container">
-            <h1 class="home-title">初二16班47人活动管理系统4.2.1</h1>
-            <p class="subtitle">签到、抽奖一站式解决方案 4.2.1 出版时间：2026.8.88 14:26</p>
+            <h1 class="home-title">初二16班47人活动管理系统4.3.1</h1>
+            <p class="subtitle">签到、抽奖一站式解决方案 4.3.1版时间：2026.8.31 14:02</p>
             <div class="home-btn-group">
                 <button class="home-btn sign-nav-btn" onclick="showPage('signPage')">进入签到系统</button>
                 <button class="home-btn draw-nav-btn" onclick="showPage('drawPage')">进入抽奖系统</button>
@@ -662,6 +705,95 @@
                         <li>被抽中的同学会记录在下方列表中</li>
                         <li>点击"重置抽奖"可重新开始</li>
                     </ol>
+                </div>
+            </div>
+
+            <!-- ★ 新增课程表卡片，放在这里 -->
+            <div class="gallery-item">
+                <h2 style="color: #2c3e50; width: 100%; text-align: center;">课程表</h2>
+                <div class="gallery-text" style="max-width: 100%; overflow-x: auto;">
+                    <table class="schedule-table">
+                        <caption>福州延安中学2026-2027学年度第一学期课程表<br>初二(16)班课程表</caption>
+                        <thead>
+                            <tr>
+                                <th>节次<br>作息时间</th>
+                                <th>星期一</th>
+                                <th>星期二</th>
+                                <th>星期三</th>
+                                <th>星期四</th>
+                                <th>星期五</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>第一节<br>8:00-8:45</td>
+                                <td>语文</td>
+                                <td>数学</td>
+                                <td>英语</td>
+                                <td>语文</td>
+                                <td>英语</td>
+                            </tr>
+                            <tr>
+                                <td>第二节<br>9:15-10:00</td>
+                                <td>英语</td>
+                                <td>语文</td>
+                                <td>物理</td>
+                                <td>英语</td>
+                                <td>语文</td>
+                            </tr>
+                            <tr>
+                                <td>第三节<br>10:15-11:00</td>
+                                <td>历史</td>
+                                <td>英语</td>
+                                <td>语文</td>
+                                <td>数学</td>
+                                <td>地理</td>
+                            </tr>
+                            <tr>
+                                <td>第四节<br>11:15-12:00</td>
+                                <td>数学</td>
+                                <td>信息</td>
+                                <td>数学</td>
+                                <td>美术</td>
+                                <td>数学</td>
+                            </tr>
+                            <tr>
+                                <td>第五节<br>2:00-2:45</td>
+                                <td>物理</td>
+                                <td>地理</td>
+                                <td>体育与健康</td>
+                                <td>物理</td>
+                                <td>生物</td>
+                            </tr>
+                            <tr>
+                                <td>第六节<br>3:00-3:45</td>
+                                <td>道德与法治</td>
+                                <td>体育与健康</td>
+                                <td>音乐</td>
+                                <td>历史</td>
+                                <td>体育与健康</td>
+                            </tr>
+                            <tr>
+                                <td>第七节<br>4:00-4:45</td>
+                                <td>生物</td>
+                                <td>体育与健康</td>
+                                <td>班会</td>
+                                <td>自习</td>
+                                <td>道德与法治</td>
+                            </tr>
+                            <tr>
+                                <td>课后服务<br>5:00-5:45</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="schedule-footer-note">
+                        课程执行时间：2026年9月1日开始实行
+                    </div>
                 </div>
             </div>
         </div>
@@ -817,7 +949,6 @@
     </footer>
 
     <script>
-        // 页面切换逻辑
         function showPage(pageId) {
             document.querySelectorAll('.home-page, .function-page').forEach(page => {
                 page.style.display = 'none';
@@ -829,7 +960,6 @@
             }
         }
 
-        // 签到功能逻辑
         let nameList = [];
         const nameListEl = document.getElementById('nameList');
         const signListEl = document.getElementById('signList');
@@ -885,7 +1015,6 @@
                 data += (index + 1) + ". " + item.textContent + "\n";
             });
             
-            // 创建下载
             const blob = new Blob([data], { type: 'text/plain' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -912,7 +1041,6 @@
             initDrawNames();
         }
 
-        // 抽奖功能逻辑
         let originalNames = [];
         let remainingNames = [];
         let drawnNames = [];
@@ -953,7 +1081,7 @@
             rollingInterval = setInterval(() => {
                 resultTextEl.textContent = getRandomName();
                 count++;
-                if (count > 5) { // 1秒后自动停止
+                if (count > 5) {
                     clearInterval(rollingInterval);
                     finishDraw();
                 }
@@ -1011,7 +1139,6 @@
             updateDrawnList();
         }
 
-        // 页面加载时初始化
         window.onload = () => {
             loadNames();
             initDrawNames();
